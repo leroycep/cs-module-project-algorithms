@@ -3,9 +3,12 @@ Input: a List of integers
 Returns: a List of integers
 '''
 def product_of_all_other_numbers(arr):
-    # Your code here
-
-    pass
+    before = [1] * len(arr)
+    after = [1] * len(arr)
+    for i in range(1, len(arr)):
+        before[i] = before[i-1] * arr[i - 1]
+        after[len(arr) - i - 1] = after[len(arr) - i] * arr[len(arr) - i]
+    return [before * after for before, after in zip(before, after)]
 
 
 if __name__ == '__main__':
