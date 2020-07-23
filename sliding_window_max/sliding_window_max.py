@@ -4,11 +4,21 @@ Returns: a List of integers
 '''
 def sliding_window_max(nums, k):
     results = [0] * (len(nums) - (k - 1))
+    max_idx = 0
+    for j in range(0, k):
+        if nums[j] > nums[max_idx]:
+            max_idx = j
     for i in range(0, len(nums) - (k - 1)):
-        results[i] = nums[i]
-        for j in range(i+1, i+k):
-            if nums[j] > results[i]:
-                results[i] = nums[j]
+        # if newest addtion is greater...
+        if nums[i+k-1] > nums[max_idx]:
+            max_idx = i + k - 1
+        elif max_idx < i:
+            # If the max just fell out of the window, we have to search for the new max
+            max_idx = i
+            for j in range(i+1, i+k):
+                if nums[j] > nums[max_idx]:
+                    max_idx = j
+        results[i] = nums[max_idx]
     return results
 
 if __name__ == '__main__':
